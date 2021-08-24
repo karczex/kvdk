@@ -215,6 +215,17 @@ TEST_F(EngineBasicTest, TestRestore) {
   delete engine;
 }
 
+TEST_F(EngineBasicTest, TestSeekToFirst) {
+
+  const std::string empty_collection = "Empty";
+  ASSERT_EQ(Engine::Open(db_path.c_str(), &engine, configs, stdout),
+            Status::Ok);
+
+  auto iter = engine->NewSortedIterator(empty_collection);
+  iter->SeekToFirst();
+  ASSERT_FALSE(iter->Valid());
+}
+
 TEST_F(EngineBasicTest, TestBasicSortedOperations) {
   const std::string global_skiplist = "skiplist";
   int num_threads = 16;
